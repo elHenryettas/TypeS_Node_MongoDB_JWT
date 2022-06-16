@@ -1,3 +1,17 @@
-import mongoose from 'mongoose'
+import mongoose, { mongo, ConnectionOptions } from "mongoose";
+import config from "./config/config";
 
-mongoose.connect("")
+const dbOptions:  = {
+
+}
+
+mongoose.connect(config.DB.URI,  dbOptions);
+
+const connection = mongoose.connection;
+connection.once("open", () => {
+  console.log("MongoDB connection stablished");
+});
+connection.on("error", (err) => {
+  console.log(err);
+  process.exit(0);
+});
